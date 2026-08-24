@@ -1,0 +1,23 @@
+vibe: prompt model to produce python
+vise: prompt codex to build agentic harness
+
+github
+    human repo for harness development diary
+        readme
+        harness flowchart image    
+    codex repos for harness code 
+
+debug
+    connection to openai
+    openai api key
+    run the agent on the ubuntu VM
+
+prompt
+    read jib pdf --> GLPayload1
+    convert jib pdf to jpg
+    read jib jpg --> GLPayload2
+    compare GLPayload1 to GLPayload2
+    verify lease is active from KGS web site
+    create csv spreadsheet, do not allow macros, from GLPayload1
+
+    
