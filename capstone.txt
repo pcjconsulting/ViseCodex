@@ -1,0 +1,52 @@
+9:52 AM 8/27/2026
+
+UI/UX
+	• provide way to upload JIBs and Run Statements
+	• display parsing discrepancies
+	• visually resolve discrepancies
+	• display/download xl spreadsheet
+
+Security
+	• Convert pdf to png, then ingest image/ocr. This...
+		1. mitigates prompt injection
+		2. eliminates PCE and DOS pdf parser exploits
+		3. destroys hidden metadata and prevents accidental PII leakage
+	• Regard all input content as data
+		1. never treated as command or instruction
+		2. never execute
+	• Static Application Security Testing (SAST) tool scans 
+		1. performed on emitted code
+		2. never in the codex prompt
+	• RBAC
+	• Azure Cloud Defender (CNAPP) provides...
+		1. DevSecOps
+		2. CSPM
+		3. CWPP
+
+Observability
+	• trace HITL intervention
+	• trace agent-to-model conversation  (bloat?)
+	• route OTel traces to DataDog (free version?)
+	• DataDog dashboard displays traces
+
+KPIs
+	• Trace HITL intervention
+	• Display when trace totals don't match
+	• Display token costs
+	• Display throughput and velocity
+	• how is an error handled, how is it prevented in future
+	  for example:
+		1. HITL - resolve discrepancies then continue to create xl csv
+		2. harness adapts to ignore or resolve discrepancies, by learning from HITL intervention
+
+Guardrails
+	• convert pdf to PNG image and parse PNG
+	• verify lease/well is active on KGS web site
+	• verify totals match
+
+Assignemt-7-1
+Governance
+	• cite each regulation and show...
+		does not apply
+		applies to owners, not KGJ bookkeeping
+		applies to CPA firm, not KGJ bookkeeping

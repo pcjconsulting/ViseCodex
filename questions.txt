@@ -1,0 +1,34 @@
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Questions for creating codex prompt
+
+guardrails
+• can't parse pdf that has only image, no text
+• must convert to image PNG, then parse the PNG
+
+• KGS web site https://apps.kgs.ku.edu/web/qualified/index
+	 parameters: lease name, operator name, state = 15
+• looking for: STATUS (well class)
+
+observability
+• how to use Azure Monitor OpenTelemetry Distro for Python to connect to MS App Insights via Open Telemetry,
+	pip install azure-monitor-opentelemetry opentelemetry-sdk
+• how to instrument the python harness code
+	import configure_azure_monitor from azure.monitor.opentelemetry
+	import trace from opentelemetry
+• how to verify OTel traces can route to App Insights (not blocked by virtual network gateway)
+
+security
+• Azure Cloud Defender (CNAPP) provides...
+	DevSecOps
+	CSPM
+	CWPP
+• how to detect attempted incursion
+• how to implement RBAC
+• how to do Static Application Security Testing (SAST) tool scans
+
+KPI metrics
+• how to trace HITL intervention
+• how to see when trace totals don't match
+• how to see token costs
+• how to see throughput and velocity
+

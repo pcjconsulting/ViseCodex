@@ -1,0 +1,44 @@
+9:52 AM 8/27/2026
+
+UI/UX
+	• provide way to upload JIBs and Run Statements
+	• display parsing discrepancies
+	• resolve discrepancies
+	• display/download xl spreadsheet
+
+Security
+	• injection on pdfs 
+		hidden text handled by parsing described in guardrail below
+		regard all content as data, never as command or instruction, do not execute
+	• SAST in code
+
+Observability
+	• trace HITL intervention
+	• trace agent-to-model conversation  (bloat?)
+	• route OTel traces to DataDog (free version?)
+	• DataDog dashboard displays traces
+
+KPI
+	• itemize each KPI 
+		what is the metric
+		how is it monitored
+		how is an error handled
+		how is that error prevented in future
+	for example:
+	• HITL - resolve discrepancies then continue to create xl csv
+	• harness adapts to ignore or resolve discrepancies, by learning from HITL intervention
+
+Guardrails
+	• parse 
+		1. if pdf has text parse to result1
+		   else parse the image pdf to result1 (pdf is image only, no text)
+		2. convert pdf to PNG image and parse PNG to result2
+		3. compare result1 to result2
+	• verify lease/well is active on KGS web site
+
+Assignemt-7-1
+Governance
+	• cite each regulation and show...
+		does not apply
+		applies to owners, not KGJ bookkeeping
+		applies to CPA firm, not KGJ bookkeeping
