@@ -1,0 +1,100 @@
+1:09 PM 8/26/2026
+
+email from Kathryn
+
+
+Account — Chart of Accounts Type
+
+Bank
+	AJ III Rev Trust
+	Commerce Bank
+
+Fixed Asset
+	Developed Leasehold Cost
+	LHD - Morrison #1-26
+	Estimated Tax Pymts
+	State Est Tax Pymts
+	Colorado Non-Resident Est Inc T
+	Furniture and Equipment
+	Geological & Geophysical
+	G&G Amortization
+	Investments - Bethryn Oil Co.
+	Investments - Pingo Oil & Gas
+	Lease Equipment
+	Accumulated Depreciation
+
+Accounts Payable
+	Notes Payable
+
+Other Current Liability
+	Minnesota State Tax W/H
+	Payroll Liabilities 
+Equity
+	Distribution
+	Opening Balance Equity
+	Retained Earnings
+
+Income
+	Bethryn Oil Income
+	Iron Ore Income
+	ORRI Oil & Gas Sales
+	Pingo Oil Income
+	Sales
+	WI Oil & Gas Sales
+
+Expense
+	Advertising and Promotion
+	Automobile Expense
+	Bank Service Charges
+	Computer and Internet Expenses
+	Depreciation Expense
+	Donations
+	Dues & Subscriptions
+	Insurance Expense
+	Interest Expense
+	Meals and Entertainment
+	Miscellaneous Expense
+	Office Supplies
+	Oil & Gas Expenses
+	Gain / Loss on Sale
+	ICC - Intangible Completion
+	IDC - Intangible Drilling
+
+Expense
+	LOE - Lease Operating
+	Oil & Gas Taxes
+	Ad Valorem Tax
+	KOGR Tax
+	ORRI Production Tax
+	ORRI Severance Tax
+	Production Tax
+	Severance Tax
+
+Expense
+	Payroll Expenses
+	Postage & Freight
+	Professional Fees
+	Accounting Fees
+	Bookkeeping
+	Rent Expense
+	Repairs and Maintenance
+	Storage Rental
+	Taxes
+	Kansas State Income Tax Refund
+	Minnesota State Tax Refund
+	Colorado Income Tax
+	Colorado Income Tax Refund
+	Federal Income Tax
+	Kansas Income Tax
+	Telephone Expense
+	Travel Expense
+	Utilities
+
+Other Income
+	Interest Income
+	Purchaser Interest
+	Other Income
+
+Other Expense
+	Other Expense
+	Ask My Accountant

@@ -1,0 +1,88 @@
+Create an agentic harness in python using the attached flowchart document.
+The harness shall ingest oil and gas lease JIB (Joint Interest Billing) pdf files.
+In addition to the JIB, the harness shall also ingest oil and gas lease Run Statement pdf files.
+The harness persona is an oil and gas bookkeeper, with expert knowledge of JIBs and Run Statements.
+The harness shall use the OpenAI Agents SDK.
+The harness shall loop executing these steps:
+Step 1
+Retrieve a JIB pdf file from the user, if not available go to Step 5.
+Step 2
+Description of fields to parse in the JIB pdf file: 
+JIB Master Fields (the JIB summary)
+	• CheckNumber = the check number of the payment made to the operator.
+	• DatePaid = the date the vendor was paid.
+	• Vendor = the vendor name.
+	• VendorInfo = the vendor information.
+	• JibDate = the date of the JIB.
+JIB Detail Fields (the JIB line items)
+	• For each lease, find the account:
+		- AccountName = one of the following: [Lease Operating Expense, Lease Equipment]
+	• Then find the following values for that account:
+		- AmountDue = the total owner amount for the lease.
+		- Memo = the month or months of operating-cost charges, always render each month as mm/yyyy, with commas separating multiple months, with no spaces.
+		- Class = the lease name.
+Parse the JIB in two parallel stages:
+    Stage-2a (text extraction): 
+	• Read the JIB pdf file.
+	• Parse JIB pdf text into JIB Master Fields and JIB Detail Fields described above.
+    Stage-2b (vision extraction): 
+	• Convert the JIB pdf file to an image file, using pdf2image.
+	• Parse the JIB image/OCR input into JIB Master Fields and JIB Detail Fields described above.
+	Note: Use a frontier LLM model if needed to parse image/OCR.
+Step 3
+Compare Stage-2a fields to Stage-2b fields, to verify all parsed fields agree.
+Step 4
+If all fields in GLPayload1 and GLPayload2 match, create the excel csv.
+Otherwise, route to Human-In-The-Loop, and flag the discrepancies.
+This excel csv shall not allow macros.
+The spreadsheet column names shall be the JIB Master Fields and JIB Detail Fields, described in Step 2 above.
+There will be one row in the spread sheet for the JIB Summary, and one or more rows for each JIB Line Item.
+
+Step 5
+Retrieve a Run Statement pdf file from the user.
+Step 6
+Description of fields to parse in the Run Statement pdf file: 
+Run Master Fields (the Run Statement summary)
+	• CheckNumber = the check number of the check deposited
+	• CheckDate = the date of the check deposited
+	• CheckAmount = the amount of the check deposited
+	• NetAmount = the net amount of the run statement
+	• GrossAmount = the gross amount of the run statement
+	• TotalTaxes = the total taxes of the run statement
+	• Owner = the owner name
+	• OwnerInfo = the owner information 
+	• StatementDate = the date of the Run Statement
+Run Detail Fields (the Run Statement line items)
+	• For each lease, find the account:
+		- AccountName = one of the following: [Lease Net WI, Lease Gross WI, Taxes, Deductions]
+	• Then find the following values for that account:
+		- TotalAmount = the total amount for the lease.
+		- Memo = the barrels of oil, or cubic feet of gas, for the lease.
+		- Class = the lease name.
+Parse in two parallel stages:
+    Stage-6a (text extraction): 
+	• Read the Run Statement pdf file.
+	• Parse Run Statement pdf text Run Master Fields and Run Detail Fields described above.
+    Stage-6b (vision extraction): 
+	• Convert the Run Statement pdf file to an image file, using pdf2image.
+	• Parse the Run Statement image/OCR input into Run Master Fields and Run Detail Fields described above.
+	Note: Use a frontier LLM model if needed to parse image/OCR.
+Step 7
+Compare Stage-6a fields to Stage-6b fields, to verify all parsed fields agree.
+Step 8
+If all fields in GLPayload1 and GLPayload2 match, create the excel csv.
+Otherwise, route to Human-In-The-Loop, and flag the discrepancies.
+This excel csv shall not allow macros.
+The spreadsheet column names shall be the Run Master Fields and Run Detail Fields, described in Step 6 above.
+There will be one row in the spread sheet for the Run Statement Summary, and one or more rows for each Run Statement Line Item.
+
+Design Choices
+Validation is intentionally strict: malformed data or invalid numbers raise errors instead of silently passing.
+The matching layers (Step 3 and Step 7) are deterministic, and compare exact values rather than fuzzy tolerances.
+Manual review is favored any time a mismatch validation signal appears.
+Render all extracted text as ascii. Do not embed unicode or binary data in the output.
+Render all extracted numbers with no padding and two decimal places, no rounding. 
+Render all extracted dates as mm/dd/yyyy. 
+Never correct spelling or grammar of extracted text.
+Never change the spelling of names of extracted text. 
+Never insert or remove characters from extracted text.

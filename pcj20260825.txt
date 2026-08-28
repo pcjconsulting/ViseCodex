@@ -1,0 +1,145 @@
+3:38 PM 8/25/2026
+
+# log on to ubuntu vm
+ssh -i $env:USERPROFILE\.ssh\codex-vscode azureuser@172.16.0.4
+
+# push source code to git
+cd /home/azureuser/source/
+git init
+git add .
+git commit -m "Initial commit of agentic harness code"
+
+ssh-keygen -t ed25519 -C "peter@pcjconsulting.com"
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+cat ~/.ssh/id_ed25519.pub
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB3knvWhFtpJIcpGsMiHFTZCKGqV2OiIxG0JzY2vUC8V peter@pcjconsulting.com
+GitHub online -> Settings -> SSH and GPG keys -> New SSH Key, and paste your public key.
+
+git remote add origin git@github.com:pcjconsulting/ai-agentic-harness.git
+git branch -M main
+git push -u origin main
+
+# copy jibs and run statements to ubuntu vm
+scp -i $env:USERPROFILE\.ssh\codex-vscode C:\Users\webster\Documents\MIT\module8\docs\*.* azureuser@172.16.0.4:/home/azureuser/source/docs
+
+RUN IT
+python -m venv .venv
+source .venv/bin/activate
+pip install -e '.[dev]'
+cp .env.example .env
+lease-gl --once --jib ./docs/MullJIB.pdf --run-statement ./docs/MVCrudeRunStmt.pdf --output-dir ./output
+lease-gl --once --jib ./docs/FalconJIB.pdf --run-statement ./docs/CHSRunStmt.pdf --output-dir ./output
+
+
+
+how much is this costing me
+20.00/month chatgpt 
+30.00 openai api credits
+VpnGw2AZ	$0.54/hour	$394.20 / month
+VpnGw1AZ	$0.21/hour	$153.30 / month
+
+downgrade from VpnGw2AZ to VpnGw1AZ
+---------------------------------------------------------------------------------
+
+----------------------- codex-vscode -------------------------
+Virtual network/subnet : vnet-southcentralus-1/snet-southcentralus-1
+
+----------------------- codex-vscode200  -------------------------
+Attached to : codex-vscode (Virtual machine) and codex-vscode-nsg (Network security group)
+Virtual network/subnet : vnet-southcentralus-1/snet-southcentralus-1
+
+----------------------- codex-vscode-nsg -------------------------
+Associated with 0 subnets, 1 network interfaces
+
+----------------------- pip-vng-codex-vscode -------------------------
+Associated to  vng-codex-vscode
+not in net/subnet
+
+-------------------- vnet-southcentralus-1 -------------------------
+Address space : 172.16.0.0/16
+Subnets : 2 subnets
+	snet-southcentralus-1 172.16.0.0/24
+	GatewaySubnet 172.16.1.0/24
+
+-------------------- vng-codex-vscode -------------------------
+SKU:VpnGw2AZ
+
+Active-active mode : Disabled
+Gateway Private IPs : Disabled
+Configure BGP : unchecked
+Enable Key Vault Access	: Disabled
+Gateway type : VPN
+VPN type : Route-based
+Virtual network : vnet-southcentralus-1
+Public IP address : 13.66.95.201 (pip-vng-codex-vscode)
+
+GatewaySubnet (172.16.1.0/24)
+
+----- Point-to-site configuration -----
+Address Pool 172.17.201.0/24
+Tunnel Type OpenVPN(SSL)
+Auth type	Azure Cert
+--- Root certs ---
+Name	P2SRootCert
+Public certificate data	MIIFIDCCAwigAwIBAgIUPuPs77pp69jPoBtHJZtS/3h+L0gwDQYJKoZIhvcNAQELBQAwFjEUMBIGA1UEAwwLUDJTUm9vdENlcnQwHhcNMjYwODE5MjMyMjQwWhcNMzYwODE2MjMyMjQwWjAWMRQwEgYDVQQDDAtQMlNSb290Q2VydDCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBANb+W2QC+eFXBH3IDFO8de7jP6/zueRc8f1C395Ky5tjMgg7DI5ScL47TxQxzxnacjFNlGDMo6ZJnnvEXojbj5gIumwCUAUQRtSdA15fsksMCilvjkvpKYH8/WSzOQ9L37Ao4VDzeBwql1ZawhOwXZmHQN2zJFuJ1EGLWdAQE7c8jSupjqyV71Irz0+qwRuQDat2FoaNKbSUTWt7AHntZADgybi5Np0Bk5sCTxmZDGHcdSG7hzJzWbTk++Tq6WjzsOPJHpPRTHr66FQb1eER8KMSfSVFdTtP+h7ORXCxj7F51Wa9y+ALIHb+0SJVw5xlsNbcGQMYGT+ha2+LglLoUBTiR9riSBWzXjNtf+2FNO1ZPv9+e1cFtUDvqhhA0Mkkt0CTE4vhfyaPHMQzp30oaMtTVvJQKZlbqE7I0BZd/Fn6kk6c9bfPUVEopM37lLzRT5Yf320IEmLgWvBG8gAzPcq0XF61eKWIeDOaXe5ZhePVwnkldx8bK0FTSn1wGoTPIfm+NYdQmd5dgWrADJFJi2NrWCPbsEros7ip/5+nRWM5mGgLI7gmlNiUpFB3Q2LbAMdi7CefGjiQ1hFcF4bDVj7Yw9cxX8FGR9ckCLyjJYWFv534Qg+F6ibkjYA1krQsO2NIUiDyjBaYZdtbE3wqV3Y1jAKfAl+iFU2ADpvjtMb9AgMBAAGjZjBkMBIGA1UdEwEB/wQIMAYBAf8CAQEwDgYDVR0PAQH/BAQDAgEGMB0GA1UdDgQWBBQviPcQ/7aQ6S53aJDUmugs/+x9lTAfBgNVHSMEGDAWgBQviPcQ/7aQ6S53aJDUmugs/+x9lTANBgkqhkiG9w0BAQsFAAOCAgEAGNsk+mm5lxVESC3Q84bbXMfGdeyTKjCh6MtWFqy2ksKGKPQbZEKuMPEmMW8kRhNcZLCMjFlDjL48ck5i557x+xcZiLEXCIjDM5a3CEBxYSgGTy9D6ZAYEPESHHTg7hSFOYUADTU7fA0dJAOb6Qv9/0BU7lRK6A7g+sgfss01CrRB2se0oFhhB5mAdeOqC6+e66TYH3PDdcXiHm4DhrPiahZKo/ewgfbQuZ83/2pWJeCmJKeEefJxSEoLNDMewzln8aYoMtuNuvdjo7gX9YbLnHYsDsHod/9O/d2/Mqy5UeNPjBXvXgyiXneZjZdSNYYgOcQtiyATPZaqVCmFzGx8izby308rIS5hfROLGJy2pyc3b66vbdBaZr4beReYUjwONfuENvImvrkpi8SVe/nPPjwTcvpykKakJftWQ/RVW5w7YB6tcE3k1ET5lkAWT1V5o+Sl2kF23cEbtG58kEFLflHULczquulnLYRK1RlbjBoVDl2Icic1pyqxIdv/a5SjOHiPBPZiugMFfXNYaHm6wzznv2X+TQ9aoyPxSPy6E4798wDjr5mwzvlbOqkm6j6LZeQoMvHUaeZThav9FA+bAdmk/afjhSve/xlN59+03yiKGBIwufjH3kaMYYCorbDKVqHOWfBQ31KQmICI+SUc1+Tnj0NlvKjJBUMb7mi9Xks=
+
+---------------------------------------------------------------------------------
+
+
+----- capstone ----- 
+===> README.md is good start !!
+capstone requirements
+	• observability
+	• metrics
+	• dashboard
+	• ui/ux
+
+What codex created is a cli agent that prompts for jib and run.
+Can also be invoked with parameters, for specific files
+	lease-gl --once --jib ./jib.pdf --run-statement ./run.pdf --output-dir ./output
+
+
+
+
+RUN IT !!
+python -m venv .venv
+source .venv/bin/activate
+pip install -e '.[dev]'
+cp .env.example .env
+# Edit .env and set OPENAI_API_KEY.
+(.venv) azureuser@codex-vscode:~/source$ pytest
+=============================================================== test session starts ================================================================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0
+rootdir: /home/azureuser/source
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.14.2
+collected 3 items                                                                                                                                  
+
+tests/test_matcher.py ..                                                                                                                     [ 66%]
+tests/test_output.py .                                                                                                                       [100%]
+
+================================================================ 3 passed in 3.61s =================================================================
+
+
+Questions
+Does my openai api key have access to 
+	gpt-4.1-mini
+	gpt-5
+How to push the ubuntu vm code to pcjconsulting repo?
+
+
+bot openai key $30.00 credits
+paid $20.00 for trial chatgpt credits
+
+login as chatgpt and run codex in vscode.
+
+set env vars
+$env:OPENAI_TEXT_MODEL = "gpt-4.1-mini"
+$env:OPENAI_VISION_MODEL = "gpt-5"
+$env:LEASE_GL_OUTPUT_DIR = "output"
+
+
+using environment variables in .env.example
+OK - it also added .env to the .gitignore file.

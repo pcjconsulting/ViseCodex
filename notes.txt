@@ -30,41 +30,77 @@ debug
     openai api key
     run the agent on the ubuntu VM
 
-prompt
 
-    
 prompt
 Create an agentic harness in python using the attached flowchart document.
-The agent reads an oil and gas lease JIB (Joint Interest Billing) pdf file to create an excel csv.
-This excel csv shall not allow macros.
-This excel csv file shall contain (if present in the JIB) these fields:
-• JIB line items
-• Inventory and asset value adjustments
-• Fixed monthly charges per active well for corporate administrative work
-• Names and contact information
-• Tax IDs
-• Ownership percentages
+The harness shall ingest oil and gas lease JIB (Joint Interest Billing) pdf files.
+In addition to the JIB, the harness shall also ingest oil and gas lease Run Statement pdf files.
 The harness shall use the OpenAI Agents SDK.
-The harness shall execute these steps:
-Step 0
-Retrieve the JIB pdf file from the user.
+The harness shall loop executing these steps:
 Step 1
-Parse the JIB pdf file. Do this in two parallel stages:
-    Stage 1a (text extraction): 
-	• Read the JIB pdf file.
-	• Parse JIB pdf text into a GLPayload object, GLPayload1.
-    Stage 1b (vision extraction): 
-	• Read the JIB pdf file.
-	• Convert the JIB pdf file to an image (e.g., png, jpg) file, using pdf2image.
-	• Parse the JIB image/OCR input into a GLPayload object, GLPayload2.
-	• Use a frontier LLM model if needed to parse image/OCR.
+Retrieve a JIB pdf file from the user, if not available go to Step 5.
 Step 2
-Compare GLPayload1 to GLPayload2 to verify the parsed fields agree.
+Description of fields to parse in the JIB pdf file: 
+JIB Master Fields (the JIB summary)
+	• The check number of the payment made to the operator, if available
+	• The date the vendor was paid, if available
+	• The vendor name
+	• The vendor information 
+	• The date of the JIB
+JIB Detail Fields (the JIB line items)
+	• Each line item is a lease, and contains the following values:
+		◘ The account name = one of the following: Lease Operating Expense, Lease Equipment, Taxes, Admin Fees, Office Rent, Postage, Office Supplies.
+		◘ The total amount for the lease for that account.
+		◘ A memo for the lease = the month for the operating cost charge.
+		◘ The class = the lease name.
+Parse the JIB in two parallel stages:
+    Stage-2a (text extraction): 
+	• Read the JIB pdf file.
+	• Parse JIB pdf text into JIB Master Fields and JIB Detail Fields described above.
+    Stage-2b (vision extraction): 
+	• Convert the JIB pdf file to an image file, using pdf2image.
+	• Parse the JIB image/OCR input into JIB Master Fields and JIB Detail Fields described above.
+	Note: Use a frontier LLM model if needed to parse image/OCR.
 Step 3
-Scrape the Kansas Geological Survey (KGS) web site to determine the JIB lease is active.
-KGS does not provide a formal API. All activity must be inferred from production recency.
+Compare Stage-2a fields to Stage-2b fields, to verify all parsed fields agree.
 Step 4
-If all fields in GLPayload1 and GLPayload2 match, and the lease is active create the excel csv.
+If all fields in GLPayload1 and GLPayload2 match, and the lease is active, create the excel csv.
+This excel csv shall not allow macros.
+Otherwise, route to Human-In-The-Loop, and flag the discrepancies.
+
+Step 5
+Retrieve a Run Statement pdf file from the user.
+Step 6
+Description of fields to parse in the Run Statement pdf file: 
+Run Master Fields (the Run Statement summary)
+	• The check number of the check deposited
+	• The date of the check deposited
+	• The amount of the check deposited
+	• The net amount of the run statement
+	• The gross amount of the run statement
+	• The total taxes of the run statement
+	• The owner name
+	• The owner information 
+	• The date of the Run Statement
+Run Detail Fields (the Run Statement line items)
+	• Each line item is a lease, and contains the following values:
+		◘ The account name = one of the following: Lease Net WI, Lease Gross WI, Taxes, Deductions.
+		◘ The total amount for the lease for that account.
+		◘ A memo for the lease = the barrels of oil, or cubic feet of gas.
+		◘ The class = the lease name.
+Parse in two parallel stages:
+    Stage-6a (text extraction): 
+	• Read the Run Statement pdf file.
+	• Parse Run Statement pdf text Run Master Fields and Run Detail Fields described above.
+    Stage-6b (vision extraction): 
+	• Convert the Run Statement pdf file to an image file, using pdf2image.
+	• Parse the Run Statement image/OCR input into Run Master Fields and Run Detail Fields described above.
+	Note: Use a frontier LLM model if needed to parse image/OCR.
+Step 7
+Compare Stage-7a fields to Stage-7b fields, to verify all parsed fields agree.
+Step 8
+If all fields in GLPayload1 and GLPayload2 match, and the lease is active, create the excel csv.
+This excel csv shall not allow macros.
 Otherwise, route to Human-In-The-Loop, and flag the discrepancies.
 
 Design Choices

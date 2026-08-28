@@ -1,0 +1,38 @@
+9:15 AM 8/27/2026
+
+TODO
+• push it (from vm)
+	start vm
+	connect azure vpn client
+	 cd /home/azureuser/source/
+	 git init
+	 git add .
+	 git commit -m "Initial commit of agentic harness code"
+
+• write new codex prompt
+	only image if pdf has no text
+	guardrails
+	observability
+	metrics and kpi
+
+• run new codex prompt
+	rm -r -f kgj-harness
+	mkdir oilgas-harness
+	cd oilgas-harness
+	../docs/assignment-workflow-sans-kgs.jpg
+	paste prompt text
+
+
+
+# use same model for both text and image, to get same parsing behavior
+export OPENAI_API_KEY='...'
+export OPENAI_TEXT_MODEL=gpt-5
+export OPENAI_VISION_MODEL=gpt-5
+
+python -m venv .venv
+source .venv/bin/activate
+pip install -e '.[dev]'
+cp .env.example .env
+
+# log on to ubuntu vm from powershell
+ssh -i $env:USERPROFILE\.ssh\codex-vscode azureuser@172.16.0.4
